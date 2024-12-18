@@ -1,0 +1,29 @@
+{
+  "header": {
+    "site": {
+      "title": "2조 - 지식형 게시판"
+    },
+    "navigation": {
+      "user": [
+        {
+          "id": "profile",
+          "name": "프로필",
+          "path": "/profile",
+          "requireAuth": true
+        },
+        {
+          "id": "login",
+          "name": "로그인",
+          "path": "/login",
+          "requireAuth": false
+        },
+        {
+          "id": "register",
+          "name": "회원가입",
+          "path": "/register",
+          "requireAuth": false
+        }
+      ]
+    }
+  }
+}

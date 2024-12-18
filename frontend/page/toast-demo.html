@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Toast UI Editor with Drawing Tool</title>
+
+    <!-- 기본 CSS -->
+    <link
+      rel="stylesheet"
+      href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://uicdn.toast.com/tui-image-editor/latest/tui-image-editor.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.css"
+    />
+
+    <style>
+      .container {
+        padding: 20px;
+      }
+      #imageEditorPopup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+      }
+      #overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+      }
+      .button-container {
+        padding: 10px;
+        text-align: right;
+        background: white;
+        position: absolute;
+        bottom: -50px;
+        right: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="editor"></div>
+    </div>
+
+    <div id="overlay"></div>
+    <div id="imageEditorPopup">
+      <div id="tui-image-editor"></div>
+      <div class="button-container">
+        <button onclick="insertAndClose()">에디터에 삽입</button>
+        <button onclick="closeDrawingTool()">닫기</button>
+      </div>
+    </div>
+
+    <!-- 기본 스크립트 -->
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.2.0/fabric.min.js"></script>
+    <script src="https://uicdn.toast.com/tui.code-snippet/v1.5.0/tui-code-snippet.min.js"></script>
+    <script src="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.js"></script>
+    <script src="https://uicdn.toast.com/tui-image-editor/latest/tui-image-editor.min.js"></script>
+
+    <script>
+      function createWhiteCanvas(width, height) {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, width, height);
+        return canvas.toDataURL();
+      }
+
+      const editor = new toastui.Editor({
+        el: document.querySelector("#editor"),
+        height: "500px",
+        initialEditType: "markdown",
+        previewStyle: "vertical",
+        toolbarItems: [
+          ["heading", "bold", "italic", "strike"],
+          ["hr", "quote"],
+          ["ul", "ol", "task", "indent", "outdent"],
+          ["table", "image", "link"],
+          ["code", "codeblock"],
+          [
+            {
+              name: "drawing",
+              tooltip: "그리기 도구",
+              command: "drawingTool",
+              text: "✏️",
+              className: "toastui-editor-toolbar-icons",
+            },
+          ],
+        ],
+      });
+
+      // 그리기 도구 커맨드 등록
+      editor.addCommand("markdown", "drawingTool", () => {
+        openDrawingTool();
+      });
+
+      editor.addCommand("wysiwyg", "drawingTool", () => {
+        openDrawingTool();
+      });
+
+      const imageEditor = new tui.ImageEditor("#tui-image-editor", {
+        includeUI: {
+          loadImage: {
+            path: createWhiteCanvas(1000, 600),
+            name: "Blank",
+          },
+          uiSize: {
+            width: "1000px",
+            height: "600px",
+          },
+          menuBarPosition: "left",
+        },
+      });
+
+      function openDrawingTool() {
+        document.getElementById("imageEditorPopup").style.display = "block";
+        document.getElementById("overlay").style.display = "block";
+        imageEditor.loadImageFromURL(createWhiteCanvas(1000, 600), "Blank");
+      }
+
+      function closeDrawingTool() {
+        document.getElementById("imageEditorPopup").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+      }
+
+      function insertAndClose() {
+        const imageUrl = imageEditor.toDataURL();
+        if (editor.isMarkdownMode()) {
+          editor.insertText(`![drawing](${imageUrl})`);
+        } else {
+          editor.exec("addImage", {
+            imageUrl: imageUrl,
+            altText: "drawing",
+          });
+        }
+        closeDrawingTool();
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeDrawingTool();
+      });
+    </script>
+  </body>
+</html>

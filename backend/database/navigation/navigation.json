@@ -1,0 +1,41 @@
+{
+  "navigation": {
+    "categories": [
+      {
+        "id": "all",
+        "name": "전체보기",
+        "path": "/"
+      },
+      {
+        "id": "Blockchain",
+        "name": "블록체인",
+        "path": "/category/blockchain"
+      },
+      {
+        "id": "AI",
+        "name": "인공지능",
+        "path": "/category/ai"
+      },
+      {
+        "id": "Bigdata",
+        "name": "빅데이터",
+        "path": "/category/big-data"
+      },
+      {
+        "id": "Programming",
+        "name": "프로그래밍",
+        "path": "/category/programming"
+      },
+      {
+        "id": "Cloud",
+        "name": "클라우드",
+        "path": "/category/cloud"
+      },
+      {
+        "id": "Security",
+        "name": "정보보안",
+        "path": "/category/cyber-security"
+      }
+    ]
+  }
+}

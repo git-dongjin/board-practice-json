@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>게시물 수정 - 지식형 게시판</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/update.css" />
+    <link
+      rel="stylesheet"
+      href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://uicdn.toast.com/tui-image-editor/latest/tui-image-editor.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.css"
+    />
+  </head>
+  <body>
+    <!-- 헤더 -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <a href="/" class="logo">2조 - 지식형 게시판</a>
+          <nav class="user-nav">
+            <a href="/login" class="nav-link">로그인</a>
+            <a href="/register" class="nav-link">회원가입</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- 카테고리 네비게이션 -->
+    <nav class="category-nav">
+      <div class="container">
+        <div class="nav-wrapper" id="categoryNav"></div>
+      </div>
+    </nav>
+
+    <!-- 메인 컨텐츠 -->
+    <main class="container">
+      <div class="editor-container">
+        <div class="write-header">
+          <input
+            type="text"
+            id="postTitle"
+            class="post-title-input"
+            placeholder="제목을 입력하세요"
+          />
+
+          <div class="category-wrapper">
+            <label class="input-label">카테고리</label>
+            <div class="category-buttons">
+              <button class="category-button" data-category="blockchain">
+                블록체인
+              </button>
+              <button class="category-button" data-category="ai">
+                인공지능
+              </button>
+              <button class="category-button" data-category="bigdata">
+                빅데이터
+              </button>
+              <button class="category-button" data-category="programming">
+                프로그래밍
+              </button>
+              <button class="category-button" data-category="cloud">
+                클라우드
+              </button>
+              <button class="category-button" data-category="security">
+                정보보안
+              </button>
+            </div>
+          </div>
+
+          <div class="tags-wrapper">
+            <label class="input-label">태그</label>
+            <div class="tags-input-container">
+              <div id="tagsList" class="tags-list"></div>
+              <input
+                type="text"
+                id="tagInput"
+                class="tag-input"
+                placeholder="태그를 입력하고 Enter를 누르세요"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div id="editor"></div>
+
+        <div class="write-footer">
+          <button id="cancelUpdate" class="cancel-button">취소</button>
+          <button id="submitUpdate" class="submit-button">수정하기</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- 이미지 에디터 팝업 -->
+    <div id="overlay"></div>
+    <div id="imageEditorPopup">
+      <div id="tui-image-editor"></div>
+      <div class="button-container">
+        <button onclick="insertAndClose()">에디터에 삽입</button>
+        <button onclick="closeDrawingTool()">닫기</button>
+      </div>
+    </div>
+
+    <!-- 스크립트 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.2.0/fabric.min.js"></script>
+    <script src="https://uicdn.toast.com/tui.code-snippet/v1.5.0/tui-code-snippet.min.js"></script>
+    <script src="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.js"></script>
+    <script src="https://uicdn.toast.com/tui-image-editor/latest/tui-image-editor.min.js"></script>
+    <script src="../js/update.js"></script>
+  </body>
+</html>

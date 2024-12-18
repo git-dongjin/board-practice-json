@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>게시물 상세보기</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/post-detail.css" />
+    <link rel="stylesheet" href="../css/comments.css" />
+
+    <!-- Toast UI Editor Viewer -->
+    <link
+      rel="stylesheet"
+      href="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.min.css"
+    />
+
+    <!-- 코드 하이라이팅을 위한 Prism 테마 (선택사항) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css"
+    />
+  </head>
+  <body>
+    <!-- 헤더 -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <a href="/" class="logo">2조 - 지식형 게시판</a>
+          <nav class="user-nav">
+            <a href="/login" class="nav-link">로그인</a>
+            <a href="/register" class="nav-link">회원가입</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- 카테고리 네비게이션 -->
+    <nav class="category-nav">
+      <div class="container">
+        <div class="nav-wrapper" id="categoryNav"></div>
+      </div>
+    </nav>
+
+    <!-- 게시물 상세 컨텐츠 -->
+    <main class="container">
+      <article class="post-detail" id="postDetail">
+        <!-- 동적으로 채워질 영역 -->
+      </article>
+
+      <!-- 댓글 섹션 -->
+      <section class="comments-section" id="commentsSection">
+        <!-- 동적으로 채워질 영역 -->
+      </section>
+    </main>
+
+    <!-- 글쓰기 버튼 -->
+    <a href="/page/write.html" class="floating-write-button">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12 4v16m8-8H4" stroke="currentColor" stroke-width="2" />
+      </svg>
+    </a>
+
+    <!-- Toast UI Editor Viewer 스크립트 -->
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script>
+    <!-- 코드 하이라이팅 플러그인 (선택사항) -->
+    <script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../js/post-detail.js"></script>
+  </body>
+</html>
