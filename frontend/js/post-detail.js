@@ -117,12 +117,30 @@ function renderPostDetail(post) {
     </div>
   `;
 
-  const viewer = new toastui.Editor({
-    // Editor.Viewer 대신 Editor 사용
+  const { chart, uml } = toastui.Editor.plugin;
+
+  const viewer = toastui.Editor.factory({
     el: document.querySelector("#viewer"),
     initialValue: post.content,
-    viewer: true, // viewer 모드로 설정
     height: "auto",
+    viewer: true,
+    plugins: [
+      [
+        toastui.Editor.plugin.uml,
+        { rendererURL: "http://www.plantuml.com/plantuml/png/" },
+      ],
+      [
+        toastui.Editor.plugin.chart,
+        {
+          width: 900, // 기본 너비 900px로 증가
+          height: 450, // 기본 높이 450px로 증가
+          minWidth: 600, // 최소 너비 600px
+          minHeight: 400, // 최소 높이 400px
+          maxWidth: 1200, // 최대 너비 1200px
+          maxHeight: 600, // 최대 높이 600px
+        },
+      ],
+    ],
   });
 
   document

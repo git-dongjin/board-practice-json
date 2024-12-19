@@ -55,11 +55,29 @@ function createWhiteCanvas(width, height) {
 
 // 에디터 초기화 함수
 function initializeEditor() {
+  const { Editor } = toastui;
+  const { uml } = Editor.plugin;
+  const { chart } = Editor.plugin;
+
   editor = new toastui.Editor({
     el: document.querySelector("#editor"),
     height: "600px",
     initialEditType: "wysiwyg",
     previewStyle: "vertical",
+    plugins: [
+      [uml, { rendererURL: "http://www.plantuml.com/plantuml/png/" }],
+      [
+        chart,
+        {
+          width: 900,
+          height: 450,
+          minWidth: 600,
+          minHeight: 400,
+          maxWidth: 1200,
+          maxHeight: 600,
+        },
+      ],
+    ],
     toolbarItems: [
       ["heading", "bold", "italic", "strike"],
       ["hr", "quote"],
@@ -74,32 +92,127 @@ function initializeEditor() {
           text: "✏️",
           className: "toastui-editor-toolbar-icons",
         },
+        {
+          name: "uml",
+          tooltip: "UML 다이어그램",
+          command: "umlDiagram",
+          text: "📊",
+          className: "toastui-editor-toolbar-icons",
+        },
+        {
+          name: "chart",
+          tooltip: "차트 삽입",
+          command: "insertChart",
+          text: "📈",
+          className: "toastui-editor-toolbar-icons",
+        },
       ],
     ],
   });
 
-  // 그리기 도구 명령어 추가
+  // 커스텀 커맨드 추가
+  addCustomCommands(editor);
+}
+
+function addCustomCommands(editor) {
+  // 그리기 도구
   editor.addCommand("markdown", "drawingTool", () => {
     openDrawingTool();
   });
-
   editor.addCommand("wysiwyg", "drawingTool", () => {
     openDrawingTool();
   });
 
-  // 이미지 에디터 초기화
-  imageEditor = new tui.ImageEditor("#tui-image-editor", {
-    includeUI: {
-      loadImage: {
-        path: createWhiteCanvas(1000, 600),
-        name: "Blank",
-      },
-      uiSize: {
-        width: "1000px",
-        height: "600px",
-      },
-      menuBarPosition: "left",
-    },
+  // UML 다이어그램
+  editor.addCommand("markdown", "umlDiagram", () => {
+    const umlTemplate = `$$uml
+participant User
+participant Browser
+participant Server
+participant Database
+
+User -> Browser: 로그인 시도
+Browser -> Server: POST /login
+Server -> Database: 사용자 검증
+Database --> Server: 결과 반환
+Server --> Browser: 응답
+Browser --> User: 결과 표시
+$$`;
+    editor.insertText(umlTemplate);
+  });
+
+  editor.addCommand("wysiwyg", "umlDiagram", () => {
+    const umlTemplate = `$$uml
+participant User
+participant Browser
+participant Server
+participant Database
+
+User -> Browser: 로그인 시도
+Browser -> Server: POST /login
+Server -> Database: 사용자 검증
+Database --> Server: 결과 반환
+Server --> Browser: 응답
+Browser --> User: 결과 표시
+$$`;
+    editor.setMarkdown(editor.getMarkdown() + "\n\n" + umlTemplate);
+  });
+
+  // 차트
+  editor.addCommand("markdown", "insertChart", () => {
+    const chartTemplate = `$$chart
+,Seoul,Sydney,Moskva
+Jan,20,5,30
+Feb,40,30,5
+Mar,25,21,18
+Apr,50,18,21
+May,15,59,33
+Jun,45,50,21
+Jul,33,28,29
+Aug,34,33,15
+Sep,20,21,33
+Oct,40,18,21
+Nov,75,59,29
+Dec,50,50,15
+
+type: area
+title: Monthly Statisfaction
+x.title: Cities
+y.title: Popularity
+y.min: 0
+y.max: 80
+series.spline: true
+legend.align: bottom
+$$`;
+    editor.insertText(chartTemplate);
+  });
+
+  editor.addCommand("wysiwyg", "insertChart", () => {
+    const chartTemplate = `$$chart
+,Seoul,Sydney,Moskva
+Jan,20,5,30
+Feb,40,30,5
+Mar,25,21,18
+Apr,50,18,21
+May,15,59,33
+Jun,45,50,21
+Jul,33,28,29
+Aug,34,33,15
+Sep,20,21,33
+Oct,40,18,21
+Nov,75,59,29
+Dec,50,50,15
+
+type: area
+title: Monthly Statisfaction
+x.title: Cities
+y.title: Popularity
+y.min: 0
+y.max: 80
+series.spline: true
+legend.align: bottom
+$$`;
+    editor.setMarkdown(editor.getMarkdown() + "\n\n" + chartTemplate);
   });
 }
 
@@ -145,7 +258,7 @@ async function loadPostData() {
 
     // 데이터 채우기
     document.getElementById("postTitle").value = post.title;
-    editor.setHTML(post.content);
+    editor.setMarkdown(post.content);
 
     // 카테고리 선택
     selectedCategory = post.category;
@@ -216,7 +329,7 @@ document.querySelectorAll(".category-button").forEach((button) => {
 // 게시물 수정 제출
 document.getElementById("submitUpdate").addEventListener("click", async () => {
   const title = document.getElementById("postTitle").value;
-  const content = editor.getHTML();
+  const content = editor.getMarkdown();
 
   if (!title) {
     alert("제목을 입력해주세요.");

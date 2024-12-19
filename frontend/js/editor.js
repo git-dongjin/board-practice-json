@@ -42,11 +42,29 @@ function createWhiteCanvas(width, height) {
   return canvas.toDataURL();
 }
 
+const { Editor } = toastui;
+const { uml } = Editor.plugin;
+const { chart } = Editor.plugin;
+
 const editor = new toastui.Editor({
   el: document.querySelector("#editor"),
   height: "600px",
   initialEditType: "wysiwyg",
   previewStyle: "vertical",
+  plugins: [
+    [uml, { rendererURL: "http://www.plantuml.com/plantuml/png/" }],
+    [
+      chart,
+      {
+        width: 900, // 기본 너비 900px로 증가
+        height: 450, // 기본 높이 450px로 증가
+        minWidth: 600, // 최소 너비 600px
+        minHeight: 400, // 최소 높이 400px
+        maxWidth: 1200, // 최대 너비 1200px
+        maxHeight: 600, // 최대 높이 600px
+      },
+    ],
+  ],
   toolbarItems: [
     ["heading", "bold", "italic", "strike"],
     ["hr", "quote"],
@@ -61,10 +79,25 @@ const editor = new toastui.Editor({
         text: "✏️",
         className: "toastui-editor-toolbar-icons",
       },
+      {
+        name: "uml",
+        tooltip: "UML 다이어그램",
+        command: "umlDiagram",
+        text: "📊",
+        className: "toastui-editor-toolbar-icons",
+      },
+      {
+        name: "chart",
+        tooltip: "차트 삽입",
+        command: "insertChart",
+        text: "📈",
+        className: "toastui-editor-toolbar-icons",
+      },
     ],
   ],
 });
 
+// image editor 창 띄우기 커스텀 커맨드
 editor.addCommand("markdown", "drawingTool", () => {
   openDrawingTool();
 });
@@ -85,6 +118,102 @@ const imageEditor = new tui.ImageEditor("#tui-image-editor", {
     },
     menuBarPosition: "left",
   },
+});
+
+// UML 다이어그램 삽입 커스텀 커맨드
+editor.addCommand("markdown", "umlDiagram", () => {
+  const umlTemplate = `$$uml
+participant User
+participant Browser
+participant Server
+participant Database
+
+User -> Browser: 로그인 시도
+Browser -> Server: POST /login
+Server -> Database: 사용자 검증
+Database --> Server: 결과 반환
+Server --> Browser: 응답
+Browser --> User: 결과 표시
+$$`;
+
+  editor.insertText(umlTemplate);
+});
+
+editor.addCommand("wysiwyg", "umlDiagram", () => {
+  const umlTemplate = `$$uml
+participant User
+participant Browser
+participant Server
+participant Database
+
+User -> Browser: 로그인 시도
+Browser -> Server: POST /login
+Server -> Database: 사용자 검증
+Database --> Server: 결과 반환
+Server --> Browser: 응답
+Browser --> User: 결과 표시
+$$`;
+
+  editor.setMarkdown(editor.getMarkdown() + "\n\n" + umlTemplate);
+});
+
+// 차트 삽입 커스텀 커맨드
+editor.addCommand("markdown", "insertChart", () => {
+  const chartTemplate = `$$chart
+,Seoul,Sydney,Moskva
+Jan,20,5,30
+Feb,40,30,5
+Mar,25,21,18
+Apr,50,18,21
+May,15,59,33
+Jun,45,50,21
+Jul,33,28,29
+Aug,34,33,15
+Sep,20,21,33
+Oct,40,18,21
+Nov,75,59,29
+Dec,50,50,15
+
+type: area
+title: Monthly Statisfaction
+x.title: Cities
+y.title: Popularity
+y.min: 0
+y.max: 80
+series.spline: true
+legend.align: bottom
+$$`;
+
+  editor.insertText(chartTemplate);
+});
+
+editor.addCommand("wysiwyg", "insertChart", () => {
+  const chartTemplate = `$$chart
+,Seoul,Sydney,Moskva
+Jan,20,5,30
+Feb,40,30,5
+Mar,25,21,18
+Apr,50,18,21
+May,15,59,33
+Jun,45,50,21
+Jul,33,28,29
+Aug,34,33,15
+Sep,20,21,33
+Oct,40,18,21
+Nov,75,59,29
+Dec,50,50,15
+
+type: area
+title: Monthly Statisfaction
+x.title: Cities
+y.title: Popularity
+y.min: 0
+y.max: 80
+series.spline: true
+legend.align: bottom
+$$`;
+
+  editor.setMarkdown(editor.getMarkdown() + "\n\n" + chartTemplate);
 });
 
 function renderTags() {
@@ -188,7 +317,7 @@ document.getElementById("submitPost").addEventListener("click", async () => {
 
   const formData = new FormData();
   formData.append("title", document.getElementById("postTitle").value);
-  formData.append("content", editor.getHTML());
+  formData.append("content", editor.getMarkdown());
   formData.append("category", selectedCategory);
   formData.append("tags", JSON.stringify(tags));
 
