@@ -181,6 +181,7 @@ y.title: Popularity
 y.min: 0
 y.max: 80
 series.spline: true
+series.zoolabme: true
 legend.align: bottom
 $$`;
 
@@ -210,6 +211,7 @@ y.title: Popularity
 y.min: 0
 y.max: 80
 series.spline: true
+series.zoomable: true
 legend.align: bottom
 $$`;
 

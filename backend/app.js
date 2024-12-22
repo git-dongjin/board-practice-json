@@ -2,6 +2,7 @@
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs").promises; // 파일 시스템 모듈
+const path = require("path");
 const multer = require("multer");
 const app = express();
 const upload = multer();
@@ -616,6 +617,80 @@ app.delete(
     }
   }
 );
+
+app.use("/api/uploads", express.static("database/uploads"));
+
+// SVG 파일 저장
+app.post("/api/uploads/svg", async (req, res) => {
+  try {
+    const svgContent = req.body.svg;
+    const fileName = `svg_${Date.now()}.svg`;
+
+    // 절대 경로로 변환
+    const filePath = path.join(__dirname, "database", "uploads", fileName);
+
+    // 디렉토리 존재 확인 및 생성
+    const dir = path.join(__dirname, "database", "uploads");
+    await fs.mkdir(dir, { recursive: true });
+
+    // 파일 저장
+    await fs.writeFile(filePath, svgContent);
+
+    // URL 반환
+    res.json({ url: `/api/uploads/${fileName}` });
+  } catch (error) {
+    console.error("Error:", error); // 에러 로깅 추가
+    res.status(500).json({ error: "Upload failed" });
+  }
+});
+
+// png 파일 저장
+app.post("/api/uploads/png", async (req, res) => {
+  try {
+    const pngContent = req.body.png;
+    const fileName = `svg_${Date.now()}.png`;
+
+    // 절대 경로로 변환
+    const filePath = path.join(__dirname, "database", "uploads", fileName);
+
+    // 디렉토리 존재 확인 및 생성
+    const dir = path.join(__dirname, "database", "uploads");
+    await fs.mkdir(dir, { recursive: true });
+
+    // 파일 저장
+    await fs.writeFile(filePath, pngContent);
+
+    // URL 반환
+    res.json({ url: `/api/uploads/${fileName}` });
+  } catch (error) {
+    console.error("Error:", error); // 에러 로깅 추가
+    res.status(500).json({ error: "Upload failed" });
+  }
+});
+
+// jpg 파일 저장
+app.post("/api/uploads/jpg", async (req, res) => {
+  try {
+    const jpgContent = req.body.jpg;
+    const fileName = `svg_${Date.now()}.jpg`;
+
+    // 절대 경로로 변환
+    const filePath = path.join(__dirname, "database", "uploads", fileName);
+
+    // 디렉토리 존재 확인 및 생성
+    const dir = path.join(__dirname, "database", "uploads");
+    await fs.mkdir(dir, { recursive: true });
+
+    // 파일 저장
+    await fs.writeFile(filePath, jpgContent);
+
+    // URL 반환
+    res.json({ url: `/api/uploads/${fileName}` });
+  } catch (error) {
+    console.error("Error:", error); // 에러 로깅 추가
+    res.status(500).json({ error: "Upload failed" });
+  }
+});
 
 // 서버 시작
 const PORT = process.env.PORT || 3000;

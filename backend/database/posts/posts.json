@@ -630,5 +630,45 @@
     },
     "likes": 0,
     "comments": []
+  },
+  "1734828731335": {
+    "id": "1734828731335",
+    "title": "chart demo",
+    "content": "$$chart\r\n,Seoul,Sydney,Moskva\r\nJan,20,5,30\r\nFeb,40,30,5\r\nMar,25,21,18\r\nApr,50,18,21\r\nMay,15,59,33\r\nJun,45,50,21\r\nJul,33,28,29\r\nAug,34,33,15\r\nSep,20,21,33\r\nOct,40,18,21\r\nNov,75,59,29\r\nDec,50,50,15\r\n\r\ntype: area\r\ntitle: Monthly Statisfaction\r\nx.title: Cities\r\ny.title: Popularity\r\nwidth: 800\r\nheight: 450\r\ny.min: 0\r\ny.max: 80\r\nseries.spline: true\r\nseries.zoomable: true\r\nseries.selectable: true\r\nseries.areaOpacity: 0.3\r\ntooltip.offsetX: 30\r\ntooltip.offsetY: -10\r\nlegend.align: bottom\r\n$$\r\n\r\n$$chart\r\n,Seoul,Tokyo,Seattle\r\nJan,7,3,6\r\nFeb,13,6,11\r\nMar,17,11,16\r\nApr,19,15,21\r\nMay,23,20,25\r\nJun,25,22,28\r\nJul,28,24,30\r\nAug,26,23,28\r\nSep,22,19,24\r\nOct,17,13,19\r\nNov,11,8,13\r\nDec,5,3,8\r\n\r\ntype: line\r\ntitle: Monthly Temperature\r\nx.title: Month\r\ny.title: Temperature (°C)\r\ny.min: 0\r\ny.max: 35\r\nwidth: 700\r\nheight: 400\r\nseries.selectable: true\r\nseries.dataLabels.visible: true\r\nseries.showDot: true\r\nseries.spline: true\r\nlegend.align: bottom\r\n$$\r\n\r\n$$chart\r\n,Desktop,Mobile,Tablet\r\nJan,420,380,150\r\nFeb,460,420,180\r\nMar,520,480,210\r\n\r\ntype: bar\r\ntitle: Device Usage Statistics\r\nx.title: Month\r\ny.title: Users (K)\r\nwidth: 700\r\nheight: 400\r\nseries.selectable: true\r\nseries.dataLabels.visible: true\r\nseries.stack: true\r\nlegend.align: bottom\r\n$$\r\n\r\n\r\n<br>\r\n$$chart\r\n,Growth 2021,Growth 2022,Growth 2023\r\nQ1,15,-8,12\r\nQ2,-5,10,18\r\nQ3,-12,15,-7\r\nQ4,8,-15,20\r\n\r\ntype: column\r\ntitle: Quarterly Growth Rate\r\nx.title: Quarter\r\ny.title: Growth Rate (%)\r\nwidth: 700\r\nheight: 400\r\ny.min: -20\r\ny.max: 25\r\nseries.selectable: true\r\nseries.dataLabels.visible: true\r\nlegend.align: bottom\r\n$$\r\n\r\n\r\n<br>\r\n<br>\r\n",
+    "category": "bigdata",
+    "tags": [
+      "toast",
+      "plugin",
+      "chart",
+      "demo"
+    ],
+    "createdAt": "2024-12-22T00:52:11.335Z",
+    "updatedAt": "2024-12-22T01:03:45.985Z",
+    "author": {
+      "id": "user-1",
+      "name": "shin-dong-jin"
+    },
+    "likes": 0,
+    "comments": []
+  },
+  "1734830428260": {
+    "id": "1734830428260",
+    "title": "uml demo",
+    "content": "\r\n<br>\r\n$$uml\r\nparticipant User\r\nparticipant Client\r\nparticipant Server\r\nparticipant Database\r\n\r\nUser -> Client: 회원가입 요청\r\nClient -> Server: POST /api/register\r\nServer -> Server: 데이터 유효성 검사\r\nServer -> Database: 이메일 중복 확인\r\nDatabase --> Server: 결과 반환\r\nalt 중복된 이메일\r\n    Server --> Client: 409 Conflict\r\n    Client --> User: \"이미 존재하는 이메일입니다\"\r\nelse 가입 가능\r\n    Server -> Database: 사용자 정보 저장\r\n    Database --> Server: 저장 완료\r\n    Server --> Client: 201 Created\r\n    Client --> User: \"회원가입이 완료되었습니다\"\r\nend\r\n$$\r\n\r\n\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\n$$uml\r\nactor Customer\r\nparticipant OrderSystem\r\nparticipant PaymentSystem\r\ndatabase OrderDB\r\n\r\nCustomer -> OrderSystem: 주문 시작\r\nloop 장바구니 아이템\r\n    OrderSystem -> OrderDB: 재고 확인\r\n    OrderDB --> OrderSystem: 재고 상태\r\n    alt 재고 있음\r\n        OrderSystem --> Customer: 주문 가능\r\n    else 재고 부족\r\n        OrderSystem --> Customer: 품절 안내\r\n        note right of Customer: 재고 부족 시\\n이메일 알림 신청 가능\r\n    end\r\nend\r\n\r\nalt 주문 계속\r\n    Customer -> PaymentSystem: 결제 진행\r\n    activate PaymentSystem\r\n    PaymentSystem -> OrderSystem: 결제 완료\r\n    deactivate PaymentSystem\r\n    OrderSystem -> OrderDB: 주문 저장\r\n    OrderDB --> OrderSystem: 저장 완료\r\n    OrderSystem --> Customer: 주문 완료\r\nelse 주문 취소\r\n    Customer -> OrderSystem: 취소 요청\r\n    OrderSystem --> Customer: 취소 완료\r\nend\r\n$$\r\n\r\n\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\n$$uml\r\nparticipant User1\r\nparticipant ChatServer\r\nparticipant User2\r\ndatabase MessageDB\r\n\r\nUser1 -> ChatServer: 접속\r\nUser2 -> ChatServer: 접속\r\nactivate ChatServer\r\n\r\npar 병렬 처리\r\n    User1 -> ChatServer: 메시지 전송\r\n    ChatServer -> MessageDB: 메시지 저장\r\n    ChatServer -> User2: 메시지 전달\r\nelse\r\n    User2 -> ChatServer: 타이핑 중 상태\r\n    ChatServer -> User1: 타이핑 표시\r\nend\r\n\r\nnote over ChatServer: 실시간 이벤트\\n브로드캐스팅\r\n\r\nalt 수신 확인\r\n    User2 --> ChatServer: 읽음 표시\r\n    ChatServer --> User1: 읽음 상태 갱신\r\nelse 미확인\r\n    ChatServer --> User1: 미읽음 표시\r\nend\r\n\r\ndeactivate ChatServer\r\n$$\r\n\r\n\r\n<br>\r\n<br>\r\n<br>\r\n$$uml\r\nbox \"API Layer\" #LightBlue\r\n    participant \"API Gateway\" as Gateway\r\n    participant \"Load Balancer\" as LB\r\nend box\r\n\r\nbox \"Core Services\" #LightGreen\r\n    participant \"User Service\" as UserService\r\n    participant \"Order Service\" as OrderService\r\n    participant \"Inventory Service\" as InventoryService\r\nend box\r\n\r\nbox \"Message Broker\" #LightYellow\r\n    queue \"Event Bus\" as EventBus\r\nend box\r\n\r\nbox \"Persistence\" #LightGray\r\n    database \"User DB\" as UserDB\r\n    database \"Order DB\" as OrderDB\r\n    database \"Inventory DB\" as InventoryDB\r\nend box\r\n\r\n-> Gateway: 주문 요청\r\nactivate Gateway\r\n\r\nGateway -> LB: 라우팅\r\nactivate LB\r\n\r\ngroup 사용자 인증\r\n    LB -> UserService: 토큰 검증\r\n    activate UserService\r\n    UserService -> UserDB: 사용자 조회\r\n    UserDB --> UserService: 사용자 정보\r\n    UserService --> LB: 인증 완료\r\n    deactivate UserService\r\nend\r\n\r\ngroup 주문 프로세스\r\n    LB -> OrderService: 주문 생성\r\n    activate OrderService\r\n    \r\n    OrderService -> OrderDB: 주문 정보 저장\r\n    OrderDB --> OrderService: 저장 완료\r\n    \r\n    OrderService -> EventBus: 재고 확인 이벤트 발행\r\n    note right: 비동기 이벤트\r\n    \r\n    EventBus -> InventoryService: 이벤트 구독\r\n    activate InventoryService\r\n    \r\n    InventoryService -> InventoryDB: 재고 확인\r\n    InventoryDB --> InventoryService: 재고 정보\r\n    \r\n    alt 재고 충분\r\n        InventoryService -> InventoryDB: 재고 차감\r\n        InventoryService -> EventBus: 주문 확정 이벤트\r\n        EventBus -> OrderService: 이벤트 수신\r\n        OrderService -> OrderDB: 주문 상태 업데이트\r\n    else 재고 부족\r\n        InventoryService -> EventBus: 재고 부족 이벤트\r\n        EventBus -> OrderService: 이벤트 수신\r\n        OrderService -> OrderDB: 주문 취소\r\n    end\r\n    \r\n    deactivate InventoryService\r\n    OrderService --> LB: 처리 결과\r\n    deactivate OrderService\r\nend\r\n\r\nLB --> Gateway: 응답\r\ndeactivate LB\r\n\r\nGateway --> : 최종 응답\r\ndeactivate Gateway\r\n$$\r\n\r\n\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\n",
+    "category": "cloud",
+    "tags": [
+      "toast",
+      "editor",
+      "uml",
+      "demo"
+    ],
+    "createdAt": "2024-12-22T01:20:28.260Z",
+    "updatedAt": "2024-12-22T01:20:28.260Z",
+    "author": {
+      "id": "user-1",
+      "name": "shin-dong-jin"
+    },
+    "likes": 0,
+    "comments": []
   }
 }
