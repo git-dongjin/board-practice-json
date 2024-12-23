@@ -621,9 +621,13 @@ app.delete(
 app.use("/api/uploads", express.static("database/uploads"));
 
 // SVG 파일 저장
-app.post("/api/uploads/svg", async (req, res) => {
+app.post("/api/uploads/svg", upload.single("svg"), async (req, res) => {
   try {
-    const svgContent = req.body.svg;
+    if (!req.file) {
+      return res.status(400).json({ error: "파일이 없습니다." });
+    }
+
+    const svgContent = req.file.buffer.toString();
     const fileName = `svg_${Date.now()}.svg`;
 
     // 절대 경로로 변환
@@ -639,7 +643,7 @@ app.post("/api/uploads/svg", async (req, res) => {
     // URL 반환
     res.json({ url: `/api/uploads/${fileName}` });
   } catch (error) {
-    console.error("Error:", error); // 에러 로깅 추가
+    console.error("Error:", error);
     res.status(500).json({ error: "Upload failed" });
   }
 });

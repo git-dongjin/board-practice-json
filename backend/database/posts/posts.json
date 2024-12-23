@@ -670,5 +670,25 @@
     },
     "likes": 0,
     "comments": []
+  },
+  "1734933179218": {
+    "id": "1734933179218",
+    "title": "SVG D3.js Demo",
+    "content": "![svg](http://localhost:3000/api/uploads/svg_1734933077321.svg)\r\n\r\n<br>\r\n![svg](http://localhost:3000/api/uploads/svg_1734933168225.svg)",
+    "category": "cloud",
+    "tags": [
+      "svg",
+      "d3.js",
+      "aws",
+      "demo"
+    ],
+    "createdAt": "2024-12-23T05:52:59.218Z",
+    "updatedAt": "2024-12-23T05:52:59.218Z",
+    "author": {
+      "id": "user-1",
+      "name": "shin-dong-jin"
+    },
+    "likes": 0,
+    "comments": []
   }
 }

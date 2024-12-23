@@ -112,6 +112,26 @@
       </div>
     </div>
 
+    <!-- D3 에디터 모달 -->
+    <div class="d3-editor-modal">
+      <div class="d3-editor-container">
+        <div class="d3-toolbar">
+          <div class="tool-group-left">
+            <button id="select-tool" class="tool-btn">선택</button>
+            <button id="stamp-tool" class="tool-btn">스탬프</button>
+            <button id="pen-tool" class="tool-btn">펜</button>
+            <button id="eraser-tool" class="tool-btn">지우개</button>
+            <button id="clear-all" class="tool-btn">초기화</button>
+          </div>
+          <div class="tool-group-right">
+            <button id="save-svg" class="save-btn">저장</button>
+            <button id="close-editor" class="close-btn">닫기</button>
+          </div>
+        </div>
+        <div id="d3-canvas"></div>
+      </div>
+    </div>
+
     <!-- 스크립트 -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://uicdn.toast.com/chart/latest/toastui-chart.min.js"></script>
@@ -123,8 +143,8 @@
     <script src="https://uicdn.toast.com/editor-plugin-uml/latest/toastui-editor-plugin-uml.min.js"></script>
     <!-- Color Picker 관련 (Image Editor에 필요) -->
     <script src="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.2.0/fabric.min.js"></script>
     <script src="https://uicdn.toast.com/tui.code-snippet/v1.5.0/tui-code-snippet.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="../js/update.js"></script>
   </body>
 </html>

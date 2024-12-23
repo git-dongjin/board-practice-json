@@ -195,3 +195,246 @@
 .button-container button:hover {
   background: var(--primary-dark);
 }
+
+/* 모달 스타일 */
+.d3-editor-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.d3-editor-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 600px;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 툴바 스타일 */
+.d3-toolbar {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* 왼쪽 그룹 */
+.tool-group-left {
+  display: flex;
+  gap: 8px;
+  flex: 1; /* 남은 공간 차지 */
+}
+
+/* 오른쪽 그룹 */
+.tool-group-right {
+  display: flex;
+  gap: 8px;
+}
+
+.tool-btn,
+.save-btn,
+.close-btn {
+  padding: 6px 12px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+}
+
+.tool-btn:hover,
+.save-btn:hover,
+.close-btn:hover {
+  background: #e9ecef;
+}
+
+.tool-btn.active {
+  background: #e3f2fd;
+  border-color: #2196f3;
+  color: #1976d2;
+}
+
+/* 캔버스 스타일 */
+#d3-canvas {
+  width: 100%;
+  height: calc(100% - 50px);
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* 스탬프 선택 모달 스타일 수정 */
+.stamp-select-modal {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1100;
+  width: 200px;
+}
+
+.stamp-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 5px;
+}
+
+.stamp-item {
+  aspect-ratio: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  background: #f8f9fa;
+}
+
+.stamp-item:hover {
+  background: #e9ecef;
+  border-color: #2196f3;
+}
+
+.stamp-item img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+/* 핸들 기본 스타일 */
+.handle {
+  fill: #2196f3;
+  stroke: white;
+  stroke-width: 2;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.stamp:hover .handle {
+  opacity: 1;
+}
+
+.rotate-handle {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="black" d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6c0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6c0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4l-4-4v3z"/></svg>')
+      10 10,
+    auto;
+}
+
+.scale-handle {
+  cursor: nw-resize;
+}
+
+.pen-settings-modal {
+  position: absolute;
+  top: 60px;
+  left: 80px;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1100;
+  width: 200px;
+}
+
+.setting-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.setting-item label {
+  font-size: 13px;
+  color: #666;
+}
+
+.setting-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#pen-width {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  background: #ddd;
+  border-radius: 2px;
+  outline: none;
+}
+
+#pen-width::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #2196f3;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#pen-width-value {
+  min-width: 40px;
+  text-align: right;
+}
+
+.eraser-cursor {
+  fill: rgba(200, 200, 200, 0.3);
+  stroke: #666;
+  stroke-width: 1;
+  pointer-events: none;
+}
+
+.selected {
+  outline: none !important;
+}
+
+.selected::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 2px solid #2196f3;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+}
+
+.selected .handle {
+  opacity: 1;
+}
+
+.selection-rect {
+  pointer-events: none;
+  stroke: #2196f3;
+  stroke-width: 1.5;
+  fill: rgba(33, 150, 243, 0.1);
+  stroke-dasharray: 4;
+}
+
+/* 다중 선택 시 그룹 바운딩 박스 */
+.group-bounds {
+  fill: none;
+  stroke: #2196f3;
+  stroke-width: 1;
+  stroke-dasharray: 4;
+  pointer-events: none;
+}
